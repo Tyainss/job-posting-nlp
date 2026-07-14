@@ -1,0 +1,23 @@
+[project]
+name = "job-posting-nlp-pipeline"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "beautifulsoup4>=4.15.0",
+    "matplotlib>=3.11.0",
+    "numpy>=2.5.1",
+    "pandas>=3.0.3",
+    "scikit-learn>=1.9.0",
+    "sentence-transformers>=5.6.0",
+    "torch>=2.13.0",
+]
+
+[dependency-groups]
+dev = [
+    "ipykernel>=7.3.0",
+    "jupyterlab>=4.6.1",
+    "pytest>=9.1.1",
+    "ruff>=0.15.21",
+]

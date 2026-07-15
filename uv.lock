@@ -825,7 +825,7 @@ wheels = [
 ]
 
 [[package]]
-name = "job-posting-nlp-pipeline"
+name = "job-posting-nlp"
 version = "0.1.0"
 source = { virtual = "." }
 dependencies = [

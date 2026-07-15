@@ -1,5 +1,5 @@
 [project]
-name = "job-posting-nlp-pipeline"
+name = "job-posting-nlp"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
@@ -21,3 +21,6 @@ dev = [
     "pytest>=9.1.1",
     "ruff>=0.15.21",
 ]
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]

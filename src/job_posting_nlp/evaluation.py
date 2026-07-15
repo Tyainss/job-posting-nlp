@@ -1,4 +1,6 @@
 import pandas as pd
+from numpy.typing import ArrayLike
+from sklearn.metrics import accuracy_score, f1_score
 from sklearn.model_selection import StratifiedGroupKFold
 
 
@@ -38,3 +40,25 @@ def make_grouped_cv() -> StratifiedGroupKFold:
         shuffle=True,
         random_state=RANDOM_STATE,
     )
+
+
+def classification_metrics(
+    y_true: ArrayLike,
+    y_pred: ArrayLike,
+) -> dict[str, float]:
+    """Calculate the shared classification metrics."""
+    return {
+        "macro F1": f1_score(
+            y_true,
+            y_pred,
+            average="macro",
+            zero_division=0,
+        ),
+        "weighted F1": f1_score(
+            y_true,
+            y_pred,
+            average="weighted",
+            zero_division=0,
+        ),
+        "accuracy": accuracy_score(y_true, y_pred),
+    }

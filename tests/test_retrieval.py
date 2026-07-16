@@ -33,8 +33,8 @@ class CharacterTokenizer:
         return result
 
 
-def test_retrieval_corpus_uses_only_development_rows_and_counts_duplicates():
-    development_rows = pd.DataFrame(
+def test_retrieval_corpus_deduplicates_descriptions_and_adds_counts():
+    cleaned_rows = pd.DataFrame(
         [
             {
                 "job_id": 1,
@@ -50,26 +50,36 @@ def test_retrieval_corpus_uses_only_development_rows_and_counts_duplicates():
                 "description": "Raw alpha",
                 "cleaned_description": "alpha",
             },
+            {
+                "job_id": 3,
+                "title": "Data Analyst",
+                "company_name": "C",
+                "description": "Raw beta",
+                "cleaned_description": "beta",
+            },
         ]
     )
+
     description_counts = pd.Series(
         {
             "alpha": 2,
-            "held-out description": 3,
+            "beta": 1,
         }
     )
 
     corpus = build_retrieval_corpus(
-        development_rows,
+        cleaned_rows,
         description_counts,
     )
 
-    assert corpus["job_id"].tolist() == [1]
-    assert corpus["duplicate_count"].tolist() == [2]
+    assert corpus["job_id"].tolist() == [1, 3]
+    assert corpus["cleaned_description"].tolist() == [
+        "alpha",
+        "beta",
+    ]
+    assert corpus["duplicate_count"].tolist() == [2, 1]
+    assert corpus["document_id"].is_unique
     assert corpus["document_id"].str.startswith("doc_").all()
-    assert "held-out description" not in set(
-        corpus["cleaned_description"]
-    )
 
 
 def test_retrieval_chunks_respect_boundaries_overlap_and_document_ids():

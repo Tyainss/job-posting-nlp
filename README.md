@@ -7,6 +7,8 @@ This project uses job descriptions for two tasks:
 
 The notebook covers the data audit, preprocessing, model comparison, final classification evaluation and semantic-search implementation.
 
+You can find a presentation about the project [in this link](https://docs.google.com/presentation/d/18TGZDIN0wROka7J_frseCUhKXD7SUPOLfRIjVCZtv7M/edit?usp=sharing)
+
 ## Results
 
 Models were compared using grouped five-fold cross-validation on the development set. The selected model was then evaluated once on the held-out test set.

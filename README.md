@@ -1,12 +1,11 @@
-# Job Posting NLP Pipeline
+# Job Posting NLP: Classification & Semantic Search
 
-This project uses job descriptions for two tasks:
+This project explores two NLP problems using job descriptions:
 
-* **classifying postings** into seven role categories;
-* **retrieving relevant postings** from natural-language search queries.
+* **role classification** into seven job-role categories;
+* **semantic search** for retrieving relevant postings from natural-language queries.
 
-The notebook covers the data audit, preprocessing, model comparison, final classification evaluation and semantic-search implementation.
-
+The notebook covers the data audit, text preprocessing, grouped model evaluation, classifier comparison, error analysis and semantic-search implementation.
 You can find a presentation about the project [in this link](https://docs.google.com/presentation/d/18TGZDIN0wROka7J_frseCUhKXD7SUPOLfRIjVCZtv7M/edit?usp=sharing)
 
 ## Results
@@ -38,12 +37,23 @@ A small evaluation using four queries and 20 manual relevance judgments produced
 
 Given the small evaluation set, these results should be treated as a demonstration rather than a broad benchmark.
 
+## Data
+
+The analysis is based on the public [LinkedIn Job Postings dataset on Kaggle](https://www.kaggle.com/datasets/arshkon/linkedin-job-postings).
+
+The saved notebook uses a pre-filtered tech/data subset. Its `role_category` target is a weak label derived from job-title keyword rules rather than a manually reviewed ground truth.
+
+The derived CSV files are not committed to this repository. The expected files and schemas are documented in [`data/README.md`](data/README.md).
+
+The modelling and evaluation workflow can be rerun once those derived files are available. The exact raw-to-sample filtering and label-generation step is outside the current repository scope.
+
 ## Repository structure
 
 ```text
 .
-├── job_posting_nlp_take_home_task.ipynb  # Main analysis and results
-├── data/                                 # Supplied job-posting data
+├── job_posting_nlp.ipynb                 # Main analysis and results
+├── data/
+│   └── README.md                         # Data provenance and expected files
 ├── src/job_posting_nlp/
 │   ├── preprocessing.py                  # Text preprocessing
 │   ├── baselines.py                      # Keyword baseline
@@ -86,10 +96,10 @@ No API keys are required.
 The main notebook is:
 
 ```text
-job_posting_nlp_take_home_task.ipynb
+job_posting_nlp.ipynb
 ```
 
-It should be run from the repository root, with the supplied CSV files kept under `data/`.
+To rerun the notebook, place the derived CSV files listed in [`data/README.md`](data/README.md) under `data/`. Without them, the saved notebook can still be inspected and the unit tests can still be run.
 
 Sentence Transformer models are downloaded from Hugging Face when they are not already available locally. Dense embedding generation can take several minutes on CPU. In the saved run, MPNet encoding took approximately 1,107 seconds and retrieval encoding took approximately 386 seconds.
 
@@ -97,4 +107,4 @@ Retrieval embeddings are cached under `.cache/embeddings/`. This directory is ig
 
 ## Limitations
 
-The main limitations are the title-derived labels, class imbalance, and the limited retrieval evaluation. These are discussed in more detail in the notebook.
+The main limitations are the title-derived labels, class imbalance, remaining duplicate content and the limited retrieval evaluation. These are discussed in more detail in the notebook.
